@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, jsonify
-from timeseries import TimeSeries, DataPoint, read_data
+from timeseries import TimeSeries, read_data
 
 app = Flask(__name__)
 
@@ -13,4 +13,4 @@ def series(id):
     return jsonify(ts.serialize)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, threaded=False)
