@@ -1,7 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="header">
-  <h1>
-    {{ title }}
-  </h1>
+<div class="cView">
+    <div class="cHeader">
+      <div class="cTitle"> {{ title }}</div>
+      <div class="cMeta">Equipment: {{ itemsMeta?.equipment }}</div>
+      <div class="cMeta">Sensor: {{ itemsMeta?.sensor }}</div>
+      <div class="cStats">Total data points: {{ items?.length }}</div>
+    </div>
+    <table class="cTable">
+      <thead>
+        <th>Timestamp</th>
+        <th>Value ({{itemsMeta?.dataPointUnit}})</th>
+      </thead>
+      <tr *ngFor="let item of items">
+        <td>{{item.timestamp}}</td>
+        <td>{{item.value}}</td>
+      </tr>
+  </table>
 </div>
+
 
