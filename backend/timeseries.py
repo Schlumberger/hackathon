@@ -39,7 +39,7 @@ class ComplexEncoder(json.JSONEncoder):
 
 
 def read_data(data_file):
-    with open(data_file, 'r', encoding='utf-8-sig') as f:
+    with open(data_file, 'r') as f:
         reader = csv.reader(f, delimiter=',')
         
         # extract metadata

@@ -11,15 +11,39 @@ import { DataPointCollectionMeta } from './data-point-collection-meta.model';
 export class AppComponent implements OnInit {
 
   public title = 'Schlumberger Hackathon Challenge';
-  public itemsMeta: DataPointCollectionMeta;
-  public items: DataPoint[];
+  public dataPointsMeta: DataPointCollectionMeta;
+  public dataPoints: DataPoint[];
+  public sensors: string[];
+  public devices: string[];
 
   constructor(private dataService: DataService) {}
 
   public ngOnInit(): void {
-    this.dataService.getPoints().subscribe(result => {
-      this.itemsMeta = result.meta;
-      this.items = result.points;
+    this.dataService.getSensors().subscribe(sensors => {
+      this.sensors = sensors;
+      this.updatePoints();
+    });
+
+    this.dataService.getDevices().subscribe(devices => {
+      this.devices = devices;
+      this.updatePoints();
+    });
+  }
+
+  private updatePoints() {
+    if (
+      !this.sensors ||
+      this.sensors.length < 1 ||
+      !this.devices ||
+      this.devices.length < 1) {
+        this.dataPointsMeta = undefined;
+        this.dataPoints = undefined;
+        return;
+      }
+
+    this.dataService.getDataPoints(this.devices[1], this.sensors[1]).subscribe(result => {
+      this.dataPointsMeta = result.meta;
+      this.dataPoints = result.points;
     });
   }
 }
