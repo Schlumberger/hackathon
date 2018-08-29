@@ -15,7 +15,7 @@ class DataPoint():
 
     @property
     def serialize(self):
-        return json.dumps(self.__dict__, cls=ComplexEncoder)
+        return self.__dict__
 
 
 class TimeSeries():

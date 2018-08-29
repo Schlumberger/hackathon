@@ -15,8 +15,17 @@ def series():
     sensor = request.args.get('sensor')
     for d in data:
         if d.equipment == espid and d.sensor == sensor:
-            return jsonify(d.serialize)
-    return jsonify("""error""")
+            return d.serialize
+    return jsonify("""{error}""")
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Content-Type', 'application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
 
 
 @app.route('/sensors')
