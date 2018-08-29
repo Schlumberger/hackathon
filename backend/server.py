@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-data, equipments, sensors = read_data('data2.csv')
+data, equipments, measurements = read_data('data2.csv')
 
 
 @app.route('/timeseries')
@@ -21,7 +21,7 @@ def series():
 
 @app.route('/sensors')
 def sensors():
-    return json.dumps(sensors)
+    return json.dumps(measurements)
 
 
 @app.route('/devices')
