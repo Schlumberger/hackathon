@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-from flask import Flask, jsonify, request, Response
-from timeseries import TimeSeries, read_data
+from flask import Flask, jsonify, request
+from timeseries import read_data
 import json
 
 app = Flask(__name__)
@@ -19,15 +19,6 @@ def series():
     return jsonify("""{error}""")
 
 
-@app.after_request
-def after_request(response):
-    response.headers.add('Content-Type', 'application/json')
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    return response
-
-
 @app.route('/sensors')
 def sensors():
     return json.dumps(measurements)
@@ -36,6 +27,15 @@ def sensors():
 @app.route('/devices')
 def devices():
     return json.dumps(equipments)
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Content-Type', 'application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
 
 
 if __name__ == "__main__":

@@ -4,8 +4,6 @@ Time series
 
 import csv
 import json
-import datetime
-import time
 
 
 class DataPoint():
@@ -55,28 +53,28 @@ def read_data(data_file):
 
         unique_equipments = set()
 
-        d_list = []
-        datapoints_list = []
+        all_equipment_data = []
+        equipment_data = []
         for value_list in values_list:
             data_list = []
             for equipment, timePoint, value in zip(equipments, timestamps, value_list):
                 if equipment != '':
                     unique_equipments.add(equipment)
-                    data_list.append(datapoints_list)
-                    datapoints_list = []
-                    datapoint = DataPoint(int(timePoint), float(value))
-                    datapoints_list.append(datapoint)
+                    data_list.append(equipment_data)
+                    equipment_data = []
+                    data_point = DataPoint(int(timePoint), float(value))
+                    equipment_data.append(data_point)
                 else:
-                    datapoint = DataPoint(int(timePoint), float(value))
-                    datapoints_list.append(datapoint)
-            d_list.append(data_list)
+                    data_point = DataPoint(int(timePoint), float(value))
+                    equipment_data.append(data_point)
+            all_equipment_data.append(data_list)
 
         timeseries_list = []
 
-        for s, u, dp in zip(sensors, units, d_list):
-            for e, d in zip(unique_equipments, dp):
-                ts = TimeSeries(e, s, u, d)
-                timeseries_list.append(ts)
+        for sensor, unit, data in zip(sensors, units, all_equipment_data):
+            for e, d in zip(unique_equipments, data):
+                timeseries = TimeSeries(e, sensor, unit, d)
+                timeseries_list.append(timeseries)
 
         return timeseries_list, list(unique_equipments), sensors
 
