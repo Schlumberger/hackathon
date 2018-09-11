@@ -8,7 +8,7 @@ Line charts are the default choice for this workflow, but they are cumbersome, e
 
 Show us how to do it better!
 
-Deliver a web application to display/query/analyze time-series data from surface and downhole equipment in innovative way(s).​​
+Deliver a web application to display/query/analyze time-series data from downhole equipment in innovative ways.​​
 
 ## Requirements
  * [Python](https://www.python.org/)

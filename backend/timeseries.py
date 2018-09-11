@@ -41,46 +41,32 @@ def read_data(data_file):
         reader = csv.reader(f, delimiter=',')
         
         # extract metadata
-        sensors = next(reader)[2:]
-        units = next(reader)[2:]
+        equipments = next(reader)[1:]
+        sensors = next(reader)[1:]
+        units = next(reader)[1:]
 
         # extract data values
         data = [list(r) for r in zip(*reader)]
 
-        equipments = data[0]
-        timestamps = data[1]
-        values_list = data[2:]
+        timestamps = data[0]
+        values_list = data[1:]
 
-        unique_equipments = set()
-
-        all_equipment_data = []
-        equipment_data = []
-        for value_list in values_list:
-            data_list = []
-            for equipment, timePoint, value in zip(equipments, timestamps, value_list):
-                if equipment != '':
-                    unique_equipments.add(equipment)
-                    data_list.append(equipment_data)
-                    equipment_data = []
-                    data_point = DataPoint(int(timePoint), float(value))
-                    equipment_data.append(data_point)
-                else:
-                    data_point = DataPoint(int(timePoint), float(value))
-                    equipment_data.append(data_point)
-            all_equipment_data.append(data_list)
+        datapoints_list = []
+        for values in values_list:
+            datapoints = [DataPoint(int(t), float(v)) for t, v in zip(timestamps, values)]
+            datapoints_list.append(datapoints)
 
         timeseries_list = []
 
-        for sensor, unit, data in zip(sensors, units, all_equipment_data):
-            for e, d in zip(unique_equipments, data):
-                timeseries = TimeSeries(e, sensor, unit, d)
-                timeseries_list.append(timeseries)
+        for e, s, u, dp in zip(equipments, sensors, units, datapoints_list):
+            ts = TimeSeries(e, s, u, dp)
+            timeseries_list.append(ts)
 
-        return timeseries_list, list(unique_equipments), sensors
+        return timeseries_list, list(set(equipments)), list(set(sensors))
 
 
 if __name__ == "__main__":
-    ts_list, equipments, sensors = read_data('data2.csv')
+    ts_list, equipments, sensors = read_data('data.csv')
     for ts in ts_list:
         print(ts.serialize)
     print(equipments)

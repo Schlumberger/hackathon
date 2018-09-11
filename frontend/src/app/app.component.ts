@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
         return;
       }
 
-    this.dataService.getDataPoints(this.devices[1], this.sensors[1]).subscribe(result => {
+    this.dataService.getDataPoints(this.devices[0], this.sensors[1]).subscribe(result => {
       this.dataPointsMeta = result.meta;
       this.dataPoints = result.points;
     });

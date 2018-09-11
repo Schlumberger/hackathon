@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-data, equipments, measurements = read_data('data2.csv')
+data, equipments, measurements = read_data('data.csv')
 
 
 @app.route('/timeseries')
