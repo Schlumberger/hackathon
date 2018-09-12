@@ -6,22 +6,26 @@ import json
 
 app = Flask(__name__)
 
-data, equipments, measurements = read_data('input/data-large.csv')
+data, equipments, sensors_per_equipment = read_data('input/data-large.csv')
 
 
 @app.route('/timeseries')
 def series():
-    espid = request.args.get('espid')
+    device_id = request.args.get('deviceid')
     sensor = request.args.get('sensor')
     for d in data:
-        if d.equipment == espid and d.sensor == sensor:
+        if d.equipment == device_id and d.sensor == sensor:
             return d.serialize
     return jsonify("""{error}""")
 
 
 @app.route('/sensors')
 def sensors():
-    return json.dumps(measurements)
+    device_id = request.args.get('deviceid')
+    print(device_id)
+    if(device_id in sensors_per_equipment):
+        return json.dumps(sensors_per_equipment[device_id])
+    return jsonify("""{error}""")
 
 
 @app.route('/devices')
@@ -33,7 +37,8 @@ def devices():
 def after_request(response):
     response.headers.add('Content-Type', 'application/json')
     response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Headers',
+                         'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
 

@@ -2,11 +2,12 @@
 <div class="cView">
     <div class="cHeader">
       <div class="cTitle"> {{ title }}</div>
-      <div class="cMeta">Equipment: {{ dataPointsMeta?.equipment }}</div>
-      <div class="cMeta">Sensor: {{ dataPointsMeta?.sensor }}</div>
-      <div class="cStats">Total data points: {{ dataPoints?.length }}</div>
+      <div class="cMeta" *ngIf="!isLoading">Equipment: {{ dataPointsMeta?.equipment }}</div>
+      <div class="cMeta" *ngIf="!isLoading">Sensor: {{ dataPointsMeta?.sensor }}</div>
+      <div class="cStats" *ngIf="!isLoading">Total data points: {{ dataPoints?.length }}</div>
     </div>
-    <table class="cTable">
+    <div class="cLoading" *ngIf="isLoading">Loading data points...</div>
+    <table *ngIf="!isLoading" class="cTable">
       <thead>
         <th>Timestamp</th>
         <th>Value ({{dataPointsMeta?.dataPointUnit}})</th>

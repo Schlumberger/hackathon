@@ -45,6 +45,15 @@ def read_data(data_file):
         sensors = next(reader)[1:]
         units = next(reader)[1:]
 
+        sensors_per_equipment = {}
+        
+        for i in range(len(equipments)):
+            if(equipments[i] in sensors_per_equipment):
+                sensors_per_equipment[equipments[i]].append(sensors[i])
+            else:
+                sensors_per_equipment[equipments[i]] = []
+                sensors_per_equipment[equipments[i]].append(sensors[i])
+
         # extract data values
         data = [list(r) for r in zip(*reader)]
 
@@ -62,12 +71,12 @@ def read_data(data_file):
             ts = TimeSeries(e, s, u, dp)
             timeseries_list.append(ts)
 
-        return timeseries_list, list(set(equipments)), list(set(sensors))
+        return timeseries_list, list(set(equipments)),sensors_per_equipment
 
 
 if __name__ == "__main__":
-    ts_list, equipments, sensors = read_data('input/data-small.csv')
-    for ts in ts_list:
-        print(ts.serialize)
-    print(equipments)
-    print(sensors)
+    ts_list, equipments, sensors_per_equipment = read_data('input/data-small.csv')
+    # for ts in ts_list:
+    #     print(ts.serialize)
+    # print(equipments)
+    # print(sensors)

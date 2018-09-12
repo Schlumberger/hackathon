@@ -12,10 +12,10 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getSensors(): Observable<string[]> {
+  public getSensors(deviceId: string): Observable<string[]> {
     return this.httpClient
      .get<string[]>(
-       `http://localhost:5000/sensors`, {observe: 'response'})
+       `http://localhost:5000/sensors?deviceid=${deviceId}`, {observe: 'response'})
      .pipe(
        map(response => response.body));
   }
@@ -31,7 +31,7 @@ export class DataService {
   public getDataPoints(deviceId: string, sensorId: string): Observable<{meta: DataPointCollectionMeta, points: DataPoint[]}> {
     return this.httpClient
      .get<{equipment, sensor, unit, datapoints}>(
-       `http://localhost:5000/timeseries?espid=${deviceId}&sensor=${sensorId}`, {observe: 'response'})
+       `http://localhost:5000/timeseries?deviceid=${deviceId}&sensor=${sensorId}`, {observe: 'response'})
      .pipe(
        map(response => {
 
