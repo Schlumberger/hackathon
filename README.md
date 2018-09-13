@@ -12,9 +12,9 @@ Deliver a web application to display/query/analyze time-series data from downhol
 
 ## Requirements
  * [Python](https://www.python.org/)
+ * [Flask](http://flask.pocoo.org/)
  * [Node.js](https://nodejs.org/en/download/)
  * [Angular CLI](https://cli.angular.io/)
-
 
 ## Launch Application
  - Go to directory **backend**
