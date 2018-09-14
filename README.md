@@ -23,3 +23,36 @@ Deliver a web application to display/query/analyze time-series data from downhol
  - run  `npm install`
  - run `npm start`
  - Browse to  [http:\\\localhost:4200](http:localhost:4200)
+
+ ## Use the APIs
+ - API 1:
+	- GET: /devices
+		- Description: list all different devices in the dataset
+		- Sample Response:
+			- [
+				"IC01",
+				"ESP03",
+				"ESP01",
+				"ESP02",
+				"IC02"	
+			  ]
+	- GET: /sensors?deviceid=IC01
+		- Description: get all sensors/measurements available for a particular device
+		- Required query parameter: deviceid
+		- Sample Response:
+			- [
+				"CHOKE_POSITION",
+				"PRESSURE1",
+				"PRESSURE2",
+				"TEMPERATURE1",
+				"TEMPERATURE2",
+				"WATER_CUT",
+				"LIQUID_RATE",
+				"WATER_RATE",
+				"OIL_RATE"
+			  ]
+	- GET: /timeseries?deviceid=IC01&sensor=OIL_RATE
+		- Description: get time series data (time/value pairs) for device/sensor combo
+		- Required query parameters: deviceid, sensor
+		- Sample Response:
+			- {"equipment": "IC01", "sensor": "OIL_RATE", "unit": "bbl/d", "datapoints": [{"timestamp": 1370044800, "value": 0.0},..]}
