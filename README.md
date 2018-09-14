@@ -36,6 +36,7 @@ Deliver a web application to display/query/analyze time-series data from downhol
 				"ESP02",
 				"IC02"	
 			  ]
+ - API 2:
 	- GET: /sensors?deviceid=IC01
 		- Description: get all sensors/measurements available for a particular device
 		- Required query parameter: deviceid
@@ -51,6 +52,7 @@ Deliver a web application to display/query/analyze time-series data from downhol
 				"WATER_RATE",
 				"OIL_RATE"
 			  ]
+ - API 3:
 	- GET: /timeseries?deviceid=IC01&sensor=OIL_RATE
 		- Description: get time series data (time/value pairs) for device/sensor combo
 		- Required query parameters: deviceid, sensor
