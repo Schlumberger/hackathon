@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from timeseries import read_data
 import json
 
@@ -16,16 +16,15 @@ def series():
     for d in data:
         if d.equipment == device_id and d.sensor == sensor:
             return d.serialize
-    return jsonify("""{error}""")
+    abort(404)
 
 
 @app.route('/sensors')
 def sensors():
     device_id = request.args.get('deviceid')
-    print(device_id)
     if(device_id in sensors_per_equipment):
         return json.dumps(sensors_per_equipment[device_id])
-    return jsonify("""{error}""")
+    abort(404)
 
 
 @app.route('/devices')
