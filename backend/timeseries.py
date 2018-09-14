@@ -75,8 +75,8 @@ def read_data(data_file):
 
 
 if __name__ == "__main__":
-    ts_list, equipments, sensors_per_equipment = read_data('input/data-small.csv')
-    # for ts in ts_list:
-    #     print(ts.serialize)
-    # print(equipments)
-    # print(sensors)
+    ts_list, equipments, sensors_per_equipment = read_data('dataset/data-small.csv')
+    for ts in ts_list:
+        print(ts.serialize)
+    print(equipments)
+    print(sensors_per_equipment)
